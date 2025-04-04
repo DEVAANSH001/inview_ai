@@ -34,10 +34,29 @@ async function Home() {
             <Link href="/interview">Start an Interview</Link>
           </Button>
         </div>
-
+        
+        
         <Image
           src="/robot.png"
           alt="robo-dude"
+          width={400}
+          height={400}
+          className="max-sm:hidden"
+        />
+      </section>
+      <section className="card-sec">
+      <div className="flex flex-col gap-6 max-w-lg">
+        <h2>Get ATS Score for Your Resume</h2>
+          <p className="text-lg">
+            Get Suggestions to Improve Your ATS Score
+          </p>
+          <Button asChild className="btn-primary max-sm:w-full">
+            <Link href="/ats">Check ATS Score</Link>
+          </Button>
+        </div>
+        <Image
+          src="/ats.png"
+          alt="ATS"
           width={400}
           height={400}
           className="max-sm:hidden"
