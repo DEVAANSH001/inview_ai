@@ -269,6 +269,10 @@
     @apply flex flex-row blue-gradient-dark rounded-3xl px-16 py-6 items-center justify-between max-sm:px-4;
   }
 
+  .card-sec {
+    @apply flex flex-row-reverse dark-gradient-blue rounded-3xl px-16 py-6 items-center justify-between max-sm:px-4;
+  }
+
   .interviews-section {
     @apply flex flex-wrap gap-4 max-lg:flex-col w-full items-stretch;
   }
@@ -308,6 +312,10 @@
 
 @utility blue-gradient-dark {
   @apply bg-gradient-to-b from-[#171532] to-[#08090D];
+}
+
+@utility dark-gradient-blue {
+  @apply bg-gradient-to-t from-[#171532] to-[#08090D];
 }
 
 @utility blue-gradient {
