@@ -3,7 +3,7 @@ import { google } from "@ai-sdk/google";
 import { db } from "@/firebase/admin";
 import { getRandomInterviewCover } from "@/lib/utils";
 import { NextRequest, NextResponse } from "next/server";
-import { getCurrentUser } from "@/lib/actions/auth.action"; // ✅ Import auth
+import { getCurrentUser } from "@/lib/actions/auth.action"; 
 
 export const config = {
   api: {
@@ -19,7 +19,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: "No file uploaded" }, { status: 400 });
     }
 
-    // ✅ Get authenticated user
     const user = await getCurrentUser();
     if (!user) {
       return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
@@ -64,7 +63,7 @@ export async function POST(req: NextRequest) {
         parsedDetails = { resumeDetails: parsedDetails };
       }
     } catch (error) {
-      console.error("❌ Error parsing Gemini response:", extractedDetails);
+      console.error(" Error parsing Gemini response:", extractedDetails);
       return NextResponse.json({ success: false, error: "Invalid JSON format from Gemini" }, { status: 500 });
     }
 
@@ -99,11 +98,11 @@ export async function POST(req: NextRequest) {
         throw new Error("Expected an array of strings.");
       }
     } catch (error) {
-      console.error("❌ Error parsing Gemini response:", questions);
+      console.error(" Error parsing Gemini response:", questions);
       return NextResponse.json({ success: false, error: "Invalid JSON format from Gemini" }, { status: 500 });
     }
 
-    // ✅ Use authenticated user ID here
+    // Use authenticated user ID here
     const interview = {
       role: parsedDetails["Full Name"] || "Candidate",
       type: "resume-based",
@@ -120,7 +119,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ success: true, interview }, { status: 200 });
   } catch (error) {
-    console.error("❌ Unexpected Error:", error);
+    console.error(" Unexpected Error:", error);
     return NextResponse.json(
       { success: false, error: error instanceof Error ? error.message : "An unknown error occurred" },
       { status: 500 }
