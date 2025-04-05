@@ -48,7 +48,11 @@ export async function POST(req: NextRequest) {
 
     let parsedDetails;
     try {
-      const cleanJson = extractedDetails.replace(/json|/g, "").trim();
+      const cleanJson = extractedDetails
+      .replace(/```(?:json)?/g, "")
+      .replace(/```/g, "")
+      .trim();
+
       parsedDetails = JSON.parse(cleanJson);
       if (Array.isArray(parsedDetails)) {
         parsedDetails = { resumeDetails: parsedDetails };
@@ -79,7 +83,11 @@ export async function POST(req: NextRequest) {
 
     let parsedQuestions;
     try {
-      const cleanJson = questions.replace(/json|/g, "").trim();
+      const cleanJson = questions
+      .replace(/```(?:json)?/g, "")
+      .replace(/```/g, "")
+      .trim();
+
       parsedQuestions = JSON.parse(cleanJson);
       if (!Array.isArray(parsedQuestions)) {
         throw new Error("Expected an array of strings.");
