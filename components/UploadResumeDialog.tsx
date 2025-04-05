@@ -86,9 +86,16 @@ export default function UploadResumeDialog() {
           {file && <CheckCircle className="text-green-500 w-5 h-5" />}
         </div>
 
-        <div className="flex justify-end gap-2 mt-4">
+        <div className="flex justify-between gap-2 mt-4">
           <Button disabled={uploading} onClick={handleUpload}>
             {uploading ? 'Uploading...' : 'Upload & Generate'}
+          </Button>
+          <Button className=''
+            onClick={() => {
+              window.location.href = '/';
+            }}
+          >
+            Done
           </Button>
         </div>
       </DialogContent>

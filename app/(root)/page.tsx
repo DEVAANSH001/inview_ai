@@ -11,6 +11,7 @@ import {
 } from "@/lib/actions/general.action";
 
 import UploadResumeDialog from "@/components/UploadResumeDialog";
+import ScrollReveal from "@/components/ScrollReveal";
 
 async function Home() {
   const user = await getCurrentUser();
@@ -25,94 +26,98 @@ async function Home() {
 
   return (
     <>
-      <section className="card-cta">
-        <div className="flex flex-col gap-6 max-w-lg">
-          <h2>Get Interview-Ready with AI-Powered Practice & Feedback</h2>
-          <p className="text-lg">
-            Prepare an Interview:
-          </p>
-          <div className="flex gap-6 max-w-lg">
+      <ScrollReveal direction="zoom">
+        <section className="card-cta">
+          <div className="flex flex-col gap-6 max-w-lg">
+            <h2>Get Interview-Ready with AI-Powered Practice & Feedback</h2>
+            <p className="text-lg">Prepare an Interview:</p>
+            <div className="flex gap-6 max-w-lg">
+              <Button asChild className="btn-primary max-sm:w-full">
+                <Link href="/interview">Using AI Assisstant</Link>
+              </Button>
+              <p className="pt-2">OR</p>
+              <UploadResumeDialog />
+            </div>
+          </div>
+
+          <Image
+            src="/new_robot.png"
+            alt="robo-dude"
+            width={400}
+            height={400}
+            className="max-sm:hidden"
+          />
+        </section>
+      </ScrollReveal>
+
+      <ScrollReveal direction="zoom">
+        <section className="card-sec">
+          <div className="flex flex-col gap-6 max-w-lg">
+            <h2>Get ATS Score for Your Resume</h2>
+            <p className="text-lg">
+              Get Suggestions to Improve Your ATS Score
+            </p>
             <Button asChild className="btn-primary max-sm:w-full">
-              <Link href="/interview">Using AI Assisstant</Link>
-            </Button>
-            <p className="pt-2">OR</p>
-            <Button asChild className="btn-primary max-sm:w-full">
-            <UploadResumeDialog />
+              <Link href="/ats">Check ATS Score</Link>
             </Button>
           </div>
-        </div>
-        
-        
-        <Image
-          src="/new_robot.png"
-          alt="robo-dude"
-          width={400}
-          height={400}
-          className="max-sm:hidden"
-        />
-      </section>
-      <section className="card-sec">
-      <div className="flex flex-col gap-6 max-w-lg">
-        <h2>Get ATS Score for Your Resume</h2>
-          <p className="text-lg">
-            Get Suggestions to Improve Your ATS Score
-          </p>
-          <Button asChild className="btn-primary max-sm:w-full">
-            <Link href="/ats">Check ATS Score</Link>
-          </Button>
-        </div>
-        <Image
-          src="/ats.png"
-          alt="ATS"
-          width={400}
-          height={400}
-          className="max-sm:hidden"
-        />
-      </section>
+          <Image
+            src="/ats.png"
+            alt="ATS"
+            width={400}
+            height={400}
+            className="max-sm:hidden"
+          />
+        </section>
+      </ScrollReveal>
 
-      <section className="flex flex-col gap-6 mt-8">
-        <h2>Your Interviews</h2>
+      <ScrollReveal direction="left">
+        <section className="flex flex-col gap-6 mt-8">
+          <h2>Your Interviews</h2>
 
-        <div className="interviews-section">
-          {hasPastInterviews ? (
-            userInterviews?.map((interview) => (
-              <InterviewCard
-                key={interview.id}
-                userId={user?.id}
-                interviewId={interview.id}
-                role={interview.role}
-                type={interview.type}
-                techstack={interview.techstack}
-                createdAt={interview.createdAt}
-              />
-            ))
-          ) : (
-            <p>You haven&apos;t taken any interviews yet</p>
-          )}
-        </div>
-      </section>
+          <div className="interviews-section">
+            {hasPastInterviews ? (
+              userInterviews?.map((interview) => (
+                <InterviewCard
+                  key={interview.id}
+                  userId={user?.id}
+                  interviewId={interview.id}
+                  role={interview.role}
+                  type={interview.type}
+                  techstack={interview.techstack}
+                  createdAt={interview.createdAt}
+                />
+              ))
+            ) : (
+              <p>You haven&apos;t taken any interviews yet</p>
+            )}
+          </div>
+        </section>
+      </ScrollReveal>
 
-      <section className="flex flex-col gap-6 mt-8">
-        <h2>Take Interviews</h2>
+      <ScrollReveal direction="right">
+        <section className="flex flex-col gap-6 mt-8">
+          <h2>Take Interviews</h2>
 
-        <div className="interviews-section">
-          {hasUpcomingInterviews ? (
-            allInterview?.map((interview) => (
-              <InterviewCard
-                key={interview.id}
-                userId={user?.id}
-                interviewId={interview.id}
-                role={interview.role}
-                type={interview.type}
-                techstack={interview.techstack}
-                createdAt={interview.createdAt}
-              />
-            ))
-          ) : (
-            <p>There are no interviews available</p>
-          )}
-        </div>
-      </section>
+          <div className="interviews-section">
+            {hasUpcomingInterviews ? (
+              allInterview?.map((interview) => (
+                <InterviewCard
+                  key={interview.id}
+                  userId={user?.id}
+                  interviewId={interview.id}
+                  role={interview.role}
+                  type={interview.type}
+                  techstack={interview.techstack}
+                  createdAt={interview.createdAt}
+                />
+              ))
+            ) : (
+              <p>There are no interviews available</p>
+            )}
+          </div>
+        </section>
+      </ScrollReveal>
     </>
   );
 }
