@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { CheckCircle } from 'lucide-react';
 
 export default function ATSPage() {
   const [jobDesc, setJobDesc] = useState("");
@@ -39,13 +40,18 @@ export default function ATSPage() {
       <h1 className="text-2xl font-bold mb-4">ATS Score Checker</h1>
 
       <form onSubmit={handleSubmit} className="space-y-4">
-        <input
-          type="file"
-          accept=".pdf,.docx"
-          onChange={(e) => setFile(e.target.files?.[0] || null)}
-          className="block border rounded p-2"
-          required
-        />
+        <div className="flex flex-row">
+          <input
+            type="file"
+            accept=".pdf,.docx"
+            onChange={(e) => setFile(e.target.files?.[0] || null)}
+            className="block border rounded p-2"
+            required
+          />
+          {file && (
+            <CheckCircle className="text-green-500 w-6 h-6 mt-2 ml-1.5" />
+          )}
+        </div>
         <textarea
           placeholder="Paste the job description..."
           value={jobDesc}

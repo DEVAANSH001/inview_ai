@@ -1,16 +1,25 @@
 'use client';
 
-import { Dialog, DialogContent, DialogDescription, DialogTitle, DialogHeader, DialogTrigger } from '@/components/ui/dialog';
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogHeader,
+  DialogTrigger,
+} from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { useRef, useState } from 'react';
 import { toast } from 'sonner';
+import { CheckCircle } from 'lucide-react';
 
 export default function UploadResumeDialog() {
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [uploading, setUploading] = useState(false);
+  const [file, setFile] = useState<File | null>(null);
+  const [open, setOpen] = useState(false); // <-- Manage dialog open state
 
   const handleUpload = async () => {
-    const file = inputRef.current?.files?.[0];
     if (!file) {
       toast.error('Please select a resume file first.');
       return;
@@ -18,7 +27,7 @@ export default function UploadResumeDialog() {
 
     const formData = new FormData();
     formData.append('resume', file);
-    formData.append('userid', '1234'); // Replace with actual user ID if available
+    formData.append('userid', '1234'); // Replace with actual user ID
 
     try {
       setUploading(true);
@@ -33,6 +42,7 @@ export default function UploadResumeDialog() {
       if (res.ok) {
         toast.success('Interview questions generated successfully!');
         console.log('Interview:', data.interview);
+        setOpen(false); // close dialog on success
       } else {
         toast.error(data.error || 'Failed to analyze resume.');
       }
@@ -44,8 +54,16 @@ export default function UploadResumeDialog() {
     }
   };
 
+  const handleDialogChange = (isOpen: boolean) => {
+    setOpen(isOpen);
+    if (!isOpen) {
+      setFile(null);
+      if (inputRef.current) inputRef.current.value = '';
+    }
+  };
+
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={handleDialogChange}>
       <DialogTrigger asChild>
         <Button className="btn-primary max-sm:w-full">Your Resume</Button>
       </DialogTrigger>
@@ -56,12 +74,18 @@ export default function UploadResumeDialog() {
             We'll extract key details from your resume and generate relevant interview questions.
           </DialogDescription>
         </DialogHeader>
-        <input
-          type="file"
-          accept=".pdf,.doc,.docx,.txt"
-          ref={inputRef}
-          className="block w-full mt-4"
-        />
+
+        <div className="flex items-center gap-2 mt-4">
+          <input
+            type="file"
+            accept=".pdf,.doc,.docx,.txt"
+            ref={inputRef}
+            onChange={(e) => setFile(e.target.files?.[0] || null)}
+            className="block w-full"
+          />
+          {file && <CheckCircle className="text-green-500 w-5 h-5" />}
+        </div>
+
         <div className="flex justify-end gap-2 mt-4">
           <Button disabled={uploading} onClick={handleUpload}>
             {uploading ? 'Uploading...' : 'Upload & Generate'}
