@@ -52,7 +52,7 @@ async function Home() {
 
       <ScrollReveal direction="zoom">
         <section className="card-sec">
-          <div className="flex flex-col gap-6 max-w-lg">
+          <div className="flex flex-col gap-8 max-w-lg">
             <h2>Get ATS Score for Your Resume</h2>
             <p className="text-lg">
               Get Suggestions to Improve Your ATS Score
@@ -72,52 +72,52 @@ async function Home() {
       </ScrollReveal>
 
       <ScrollReveal direction="left">
-        <section className="flex flex-col gap-6 mt-8">
-          <h2>Your Interviews</h2>
+  <section className="flex flex-col gap-8 mt-8">
+    <h2>Your Interviews</h2>
 
-          <div className="interviews-section">
-            {hasPastInterviews ? (
-              userInterviews?.map((interview) => (
-                <InterviewCard
-                  key={interview.id}
-                  userId={user?.id}
-                  interviewId={interview.id}
-                  role={interview.role}
-                  type={interview.type}
-                  techstack={interview.techstack}
-                  createdAt={interview.createdAt}
-                />
-              ))
-            ) : (
-              <p>You haven&apos;t taken any interviews yet</p>
-            )}
-          </div>
-        </section>
-      </ScrollReveal>
+    <div className="interviews-section flex flex-wrap gap-12">
+      {hasPastInterviews ? (
+        userInterviews?.map((interview) => (
+          <InterviewCard
+            key={interview.id}
+            userId={user?.id}
+            interviewId={interview.id}
+            role={interview.role}
+            type={interview.type}
+            techstack={interview.techstack}
+            createdAt={interview.createdAt}
+          />
+        ))
+      ) : (
+        <p>You haven&apos;t taken any interviews yet</p>
+      )}
+    </div>
+  </section>
+</ScrollReveal>
 
-      <ScrollReveal direction="right">
-        <section className="flex flex-col gap-6 mt-8">
-          <h2>Take Interviews</h2>
+<ScrollReveal direction="right">
+  <section className="flex flex-col gap-8 mt-12">
+    <h2>Take Interviews</h2>
 
-          <div className="interviews-section">
-            {hasUpcomingInterviews ? (
-              allInterview?.map((interview) => (
-                <InterviewCard
-                  key={interview.id}
-                  userId={user?.id}
-                  interviewId={interview.id}
-                  role={interview.role}
-                  type={interview.type}
-                  techstack={interview.techstack}
-                  createdAt={interview.createdAt}
-                />
-              ))
-            ) : (
-              <p>There are no interviews available</p>
-            )}
-          </div>
-        </section>
-      </ScrollReveal>
+    <div className="interviews-section flex flex-wrap gap-12">
+      {hasUpcomingInterviews ? (
+        allInterview?.map((interview) => (
+          <InterviewCard
+            key={interview.id}
+            userId={user?.id}
+            interviewId={interview.id}
+            role={interview.role}
+            type={interview.type}
+            techstack={interview.techstack}
+            createdAt={interview.createdAt}
+          />
+        ))
+      ) : (
+        <p>There are no interviews available</p>
+      )}
+    </div>
+  </section>
+</ScrollReveal>
     </>
   );
 }

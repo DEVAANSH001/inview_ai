@@ -262,8 +262,9 @@
   }
 
   .root-layout {
-    @apply flex mx-auto max-w-7xl flex-col gap-12 my-12 px-16 max-sm:px-4 max-sm:my-8;
+    @apply flex w-[85%] mx-auto flex-col gap-12 my-12 max-sm:px-4 max-sm:my-8;
   }
+  
 
   .card-cta {
     @apply flex flex-row blue-gradient-dark rounded-3xl px-16 py-6 items-center justify-between max-sm:px-4;
