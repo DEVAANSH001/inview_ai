@@ -3,7 +3,6 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
-import Webcam from '@/components/WebCam';
 import { cn } from "@/lib/utils";
 import { vapi } from "@/lib/vapi.sdk";
 import { interviewer } from "@/constants";
@@ -166,7 +165,13 @@ const Agent = ({
         {/* User Profile Card */}
         <div className="card-border">
           <div className="card-content">
-          <Webcam/>
+            <Image
+              src="/user-avatar.png"
+              alt="profile-image"
+              width={539}
+              height={539}
+              className="rounded-full object-cover size-[120px]"
+            />
             <h3>{userName}</h3>
           </div>
         </div>
