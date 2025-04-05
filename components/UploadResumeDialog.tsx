@@ -78,10 +78,10 @@ export default function UploadResumeDialog() {
         <div className="flex items-center gap-2 mt-4">
           <input
             type="file"
-            accept=".pdf,.doc,.docx,.txt"
-            ref={inputRef}
+            accept=".pdf,.docx"
             onChange={(e) => setFile(e.target.files?.[0] || null)}
-            className="block w-full"
+            className="block border rounded p-2 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-gray-800 file:text-white file:cursor-pointer"
+            required
           />
           {file && <CheckCircle className="text-green-500 w-5 h-5" />}
         </div>

@@ -41,13 +41,14 @@ export default function ATSPage() {
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="flex flex-row">
-          <input
-            type="file"
-            accept=".pdf,.docx"
-            onChange={(e) => setFile(e.target.files?.[0] || null)}
-            className="block border rounded p-2"
-            required
-          />
+        <input
+          type="file"
+          accept=".pdf,.docx"
+          onChange={(e) => setFile(e.target.files?.[0] || null)}
+          className="block border rounded p-2 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-gray-800 file:text-white file:cursor-pointer"
+          required
+        />
+
           {file && (
             <CheckCircle className="text-green-500 w-6 h-6 mt-2 ml-1.5" />
           )}
