@@ -3,6 +3,7 @@ import { google } from "@ai-sdk/google";
 import { db } from "@/firebase/admin";
 import { getRandomInterviewCover } from "@/lib/utils";
 import { NextRequest, NextResponse } from "next/server";
+import { getCurrentUser } from "@/lib/actions/auth.action"; // ✅ Import auth
 
 export const config = {
   api: {
@@ -16,6 +17,12 @@ export async function POST(req: NextRequest) {
     const file = formData.get("resume") as File;
     if (!file) {
       return NextResponse.json({ success: false, error: "No file uploaded" }, { status: 400 });
+    }
+
+    // ✅ Get authenticated user
+    const user = await getCurrentUser();
+    if (!user) {
+      return NextResponse.json({ success: false, error: "Unauthorized" }, { status: 401 });
     }
 
     // Convert file to text
@@ -43,15 +50,14 @@ export async function POST(req: NextRequest) {
       ${resumeText}
 
       Format the response strictly in valid JSON.`,
-
     });
 
     let parsedDetails;
     try {
       const cleanJson = extractedDetails
-      .replace(/```(?:json)?/g, "")
-      .replace(/```/g, "")
-      .trim();
+        .replace(/```(?:json)?/g, "")
+        .replace(/```/g, "")
+        .trim();
 
       parsedDetails = JSON.parse(cleanJson);
       if (Array.isArray(parsedDetails)) {
@@ -84,9 +90,9 @@ export async function POST(req: NextRequest) {
     let parsedQuestions;
     try {
       const cleanJson = questions
-      .replace(/```(?:json)?/g, "")
-      .replace(/```/g, "")
-      .trim();
+        .replace(/```(?:json)?/g, "")
+        .replace(/```/g, "")
+        .trim();
 
       parsedQuestions = JSON.parse(cleanJson);
       if (!Array.isArray(parsedQuestions)) {
@@ -97,18 +103,18 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ success: false, error: "Invalid JSON format from Gemini" }, { status: 500 });
     }
 
-    // Save interview to Firestore
+    // ✅ Use authenticated user ID here
     const interview = {
       role: parsedDetails["Full Name"] || "Candidate",
       type: "resume-based",
       level: parsedDetails["Level"] || "Unknown",
       techstack: parsedDetails["Tech Stack"] || [],
       questions: parsedQuestions,
-      userId: formData.get("userid"),
+      userId: user.id, // ✅ Replaced formData.get("userid")
       finalized: true,
       coverImage: getRandomInterviewCover(),
       createdAt: new Date().toISOString(),
-    };    
+    };
 
     await db.collection("interviews").add(interview);
 
