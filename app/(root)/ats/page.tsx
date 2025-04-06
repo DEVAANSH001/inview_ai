@@ -41,13 +41,13 @@ export default function ATSPage() {
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div className="flex flex-row">
-        <input
-          type="file"
-          accept=".pdf,.docx"
-          onChange={(e) => setFile(e.target.files?.[0] || null)}
-          className="block border rounded p-2 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-gray-800 file:text-white file:cursor-pointer"
-          required
-        />
+          <input
+            type="file"
+            accept=".pdf,.docx"
+            onChange={(e) => setFile(e.target.files?.[0] || null)}
+            className="block border rounded p-2 file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:bg-gray-800 file:text-white file:cursor-pointer"
+            required
+          />
 
           {file && (
             <CheckCircle className="text-green-500 w-6 h-6 mt-2 ml-1.5" />
@@ -75,10 +75,63 @@ export default function ATSPage() {
             <p className="text-red-600">{result.error}</p>
           ) : (
             <>
-              <h2 className="text-xl font-semibold">
+              <h2 className="text-xl font-semibold mb-2">
                 ATS Score: {result.score}%
               </h2>
-              <p className="mt-2">{result.analysis}</p>
+
+              <div className="mb-4">
+                <h3 className="font-semibold">✅ Strengths:</h3>
+                <ul className="list-disc list-inside">
+                  {result.strengths.map((item: string, idx: number) => (
+                    <li key={idx}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="mb-4">
+                <h3 className="font-semibold">⚠️ Weaknesses:</h3>
+                <ul className="list-disc list-inside">
+                  {result.weaknesses.map((item: string, idx: number) => (
+                    <li key={idx}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="mb-4">
+                <h3 className="font-semibold">📌 Picked Skills:</h3>
+                <ul className="list-disc list-inside">
+                  {result.picked_skills.map((item: string, idx: number) => (
+                    <li key={idx}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="mb-4">
+                <h3 className="font-semibold">🧠 Picked Experience:</h3>
+                <ul className="list-disc list-inside">
+                  {result.picked_experience.map((item: string, idx: number) => (
+                    <li key={idx}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="mb-4">
+                <h3 className="font-semibold">❌ Missing Keywords from Job Description:</h3>
+                <ul className="list-disc list-inside">
+                  {result.missing_keywords.map((item: string, idx: number) => (
+                    <li key={idx}>{item}</li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="mb-4">
+                <h3 className="font-semibold">🛠 Improvement Tips:</h3>
+                <ul className="list-disc list-inside">
+                  {result.improvement_tips.map((item: string, idx: number) => (
+                    <li key={idx}>{item}</li>
+                  ))}
+                </ul>
+              </div>
             </>
           )}
         </div>
