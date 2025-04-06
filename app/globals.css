@@ -262,9 +262,8 @@
   }
 
   .root-layout {
-    @apply flex w-[90%] ml-[5%] mr-[5%] flex-col gap-12 my-12 max-sm:px-4 max-sm:my-8;
+    @apply flex w-[85%] mx-auto flex-col gap-12 my-12 max-sm:px-4 max-sm:my-8;
   }
-  
   
 
   .card-cta {
