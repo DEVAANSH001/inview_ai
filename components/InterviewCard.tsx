@@ -38,7 +38,7 @@ const InterviewCard = async ({
   ).format("MMM D, YYYY");
 
   return (
-    <div className="card-border w-[360px] max-sm:w-full min-h-96 mb-6 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-[0_10px_30px_rgba(59,130,246,0.5)]">
+    <div className="card-border w-[330px] max-sm:w-full min-h-96 mb-6 transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-[0_10px_30px_rgba(59,130,246,0.5)]">
 
 
 
