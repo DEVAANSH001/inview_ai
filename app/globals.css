@@ -331,6 +331,29 @@
   animation: fadeIn 0.3s ease-in-out;
 }
 
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #2a2929; /* optional: light background */
+}
+::-webkit-scrollbar-thumb {
+  background: #000; 
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #222; /* slightly lighter black on hover */
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #0b0b0b #2d0d56; 
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

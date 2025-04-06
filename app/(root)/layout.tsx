@@ -17,7 +17,7 @@ const Layout = async ({ children }: { children: ReactNode }) => {
           <h2 className="text-primary-100">InView.AI</h2>
         </Link>
 
-        {/* ✅ Sign Out button */}
+        {/*  Sign Out button */}
         <SignOutButton />
       </nav>
 
