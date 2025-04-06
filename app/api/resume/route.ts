@@ -78,12 +78,13 @@ export async function POST(req: NextRequest) {
       - Certifications & Achievements: ${parsedDetails["Certifications & Achievements"]}
 
       Instructions:
-      - Difficulty should increase with experience (if experience is null, keep questions beginner level).
-      - Each question should be relevant to resume details.
+      - Difficulty should increase with experience.
+      - If the candidate is a Fresher, do NOT make the questions overly simplistic. Ask beginner to intermediate-level questions to challenge understanding.
+      - Each question MUST be technical and directly relevant to the resume's skills, projects, experience, or technologies used.
+      - Prioritize technologies, tools, and domains mentioned across projects, experience, or skills.
       - Return ONLY a valid JSON array of strings like this:
       ["Question 1", "Question 2", "Question 3", "Question 4", "Question 5"]
-      - Do NOT include any explanation or extra text. Only return the array. No markdown, no code block.
-      `,
+      - Do NOT include any explanation or extra text. Only return the array. No markdown, no code block.`,
     });
 
     let parsedQuestions;
