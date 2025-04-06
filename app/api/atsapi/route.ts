@@ -17,7 +17,8 @@ export async function POST(request: Request) {
     const buffer = await resumeFile.arrayBuffer();
     const base64 = Buffer.from(buffer).toString("base64");
 
-    const { text: resumeText } = await generateText({
+    // STEP 1: PARSE RESUME
+    const { text: parsedText } = await generateText({
       model: google("gemini-1.5-flash"),
       prompt: `
 You are a PDF parsing engine that extracts clean, accurate, and complete information from resumes.
@@ -27,7 +28,7 @@ The input is a base64-encoded PDF resume. Perform the following tasks:
 1. Extract the **raw readable text** from the PDF, maintaining logical structure and order (e.g., name, education, experience, projects, skills).
 2. If section headers like "Experience", "Internships", or "Work History" are **missing**, assume the user is a **Fresher**.
 3. If date ranges (e.g., "Jan 2021 - May 2023") are found in the experience section, **calculate approximate years of experience**.
-4. Extract important URLs or hyperlinks (like GitHub, LinkedIn, portfolios) as-is.
+4. Extract important URLs or hyperlinks (like GitHub, LinkedIn, portfolios, CodeChef, LeetCode, Codeforces, Kaggle) as-is.
 5. Do NOT guess or generate any missing information.
 6. Do NOT alter names, dates, job titles, or project names.
 7. Do NOT summarize or interpret content beyond what's explicitly present.
@@ -47,45 +48,44 @@ Return a plain-text block containing:
 --- BASE64 PDF RESUME ---
 ${base64}
 `
-
     });
 
-    const prompt = `
-    You are a strict Applicant Tracking System (ATS) evaluator.
-    
-    Evaluate how well the resume matches the job description. Return a VALID JSON object in the following format:
-    
-    {
-      "score": integer from 0 to 100,
-      "picked_skills": [skills or keywords picked from resume],
-      "picked_experience": [projects, work experience, internships from resume],
-      "missing_keywords": [important keywords in job description but not found in resume],
-      "strengths": [list of strengths found in the resume],
-      "weaknesses": [list of mismatches or missing criteria],
-      "improvement_tips": [actionable suggestions to improve the resume for this job]
-    }
-    
-    Match based on:
-    - Required vs present skills
-    - Education match (e.g., M.Tech required, B.Tech present = mismatch)
-    - Relevant experience/projects
-    - Libraries or tools mentioned
-    - NLP, ML, DL, Generative AI concepts
-    - Other key responsibilities or expectations
-    
-    Avoid hallucinations. Only mention what's in the resume.
-    
-    --- JOB DESCRIPTION ---
-    ${jobDescription}
-    
-    --- RESUME TEXT ---
-    ${resumeText}
-    `;
-    
+    // STEP 2: ATS EVALUATION
+    const atsPrompt = `
+You are a strict Applicant Tracking System (ATS) evaluator.
+
+Evaluate how well the parsed resume JSON matches the job description. Return a VALID JSON object in the following format:
+
+{
+  "score": integer from 0 to 100,
+  "picked_skills": [skills or keywords picked from resume],
+  "picked_experience": [projects, work experience, internships from resume with their actual titles or names instead of generic labels like 'Project 1'],
+  "missing_keywords": [important keywords in job description but not found in resume],
+  "strengths": [list of strengths found in the resume],
+  "weaknesses": [list of mismatches or missing criteria],
+  "improvement_tips": [actionable suggestions to improve the resume for this job]
+}
+
+Match based on:
+- Required vs present skills
+- Education match (e.g., M.Tech required, B.Tech present = mismatch)
+- Relevant experience/projects
+- Libraries or tools mentioned
+- NLP, ML, DL, Generative AI concepts
+- Other key responsibilities or expectations
+
+Avoid hallucinations. Only mention what's in the resume. Use actual project or experience titles instead of generic names like 'Project 1'.
+
+--- JOB DESCRIPTION ---
+${jobDescription}
+
+--- RESUME DATA (JSON + Raw Text) ---
+${parsedText}
+`;
 
     const { text: geminiResponse } = await generateText({
       model: google("gemini-1.5-flash"),
-      prompt,
+      prompt: atsPrompt,
     });
 
     let parsedResponse;
