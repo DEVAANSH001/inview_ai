@@ -42,7 +42,8 @@ export default function UploadResumeDialog() {
       if (res.ok) {
         toast.success('Interview questions generated successfully!');
         console.log('Interview:', data.interview);
-        setOpen(false); // close dialog on success
+        setOpen(false);
+        setTimeout(() => window.location.reload(), 1000);
       } else {
         toast.error(data.error || 'Failed to analyze resume.');
       }
