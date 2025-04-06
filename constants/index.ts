@@ -154,8 +154,7 @@ export const interviewer: CreateAssistantDTO = {
   End the conversation on a polite and positive note.
   
   - Be sure to be professional and polite.
-  - Keep all your responses short and simple. Use official language, but be kind and welcoming.
-  - This is a voice conversation, so keep your responses short, like in a real conversation. Don't ramble for too long.`,
+  - Keep all your responses short and simple. Use official language, but be kind and welcoming.`,
       },
     ],
   }
