@@ -14,7 +14,7 @@ const Layout = async ({ children }: { children: ReactNode }) => {
       <nav className="flex justify-between items-center p-4">
         <Link href="/" className="flex items-center gap-2">
           <Image src="/logo.svg" alt="MockMate Logo" width={38} height={32} />
-          <h2 className="text-primary-100">Inview-AI</h2>
+          <h2 className="text-primary-100">InView.AI</h2>
         </Link>
 
         {/* ✅ Sign Out button */}
